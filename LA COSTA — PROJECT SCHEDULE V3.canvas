@@ -1,0 +1,615 @@
+{
+  "nodes": [
+    {
+      "id": "g5cxcfhv841arfnx",
+      "type": "text",
+      "x": -220,
+      "y": -240,
+      "width": 5040,
+      "height": 120,
+      "text": "# LA COSTA HOTEL\n### PROJECT SCHEDULE \u2014 V3",
+      "color": "#231f20"
+    },
+    {
+      "id": "v6q63ir8p8jw6u85",
+      "type": "text",
+      "x": 0,
+      "y": -110,
+      "width": 300,
+      "height": 100,
+      "text": "MAY 2026",
+      "color": "#2a2a2a"
+    },
+    {
+      "id": "wses818sf5ln5bla",
+      "type": "text",
+      "x": 300,
+      "y": -110,
+      "width": 310,
+      "height": 100,
+      "text": "JUNE 2026",
+      "color": "#323232"
+    },
+    {
+      "id": "125dljkhvjgkplwt",
+      "type": "text",
+      "x": 610,
+      "y": -110,
+      "width": 293,
+      "height": 100,
+      "text": "JULY 2026",
+      "color": "#2a2a2a"
+    },
+    {
+      "id": "tmbk3w1pq3wx70hb",
+      "type": "text",
+      "x": 903,
+      "y": -110,
+      "width": 296,
+      "height": 100,
+      "text": "AUGUST 2026",
+      "color": "#323232"
+    },
+    {
+      "id": "jl013s4xil2bgy3w",
+      "type": "text",
+      "x": 1199,
+      "y": -110,
+      "width": 300,
+      "height": 100,
+      "text": "SEPTEMBER 2026",
+      "color": "#2a2a2a"
+    },
+    {
+      "id": "vw01ul68znp8k0or",
+      "type": "text",
+      "x": 1499,
+      "y": -110,
+      "width": 301,
+      "height": 100,
+      "text": "OCTOBER 2026",
+      "color": "#323232"
+    },
+    {
+      "id": "8vg87jzqshaxwroe",
+      "type": "text",
+      "x": 1800,
+      "y": -110,
+      "width": 298,
+      "height": 100,
+      "text": "NOVEMBER 2026",
+      "color": "#2a2a2a"
+    },
+    {
+      "id": "mj3e0a8g2edg6194",
+      "type": "text",
+      "x": 2098,
+      "y": -110,
+      "width": 302,
+      "height": 100,
+      "text": "DECEMBER 2026",
+      "color": "#323232"
+    },
+    {
+      "id": "2x8qt8qciutbkywo",
+      "type": "text",
+      "x": 2400,
+      "y": -110,
+      "width": 295,
+      "height": 100,
+      "text": "JANUARY 2027",
+      "color": "#2a2a2a"
+    },
+    {
+      "id": "j3j2bboybmd7co2g",
+      "type": "text",
+      "x": 2695,
+      "y": -110,
+      "width": 305,
+      "height": 100,
+      "text": "FEBRUARY 2027",
+      "color": "#323232"
+    },
+    {
+      "id": "i4farhfzjp4514vk",
+      "type": "text",
+      "x": 3000,
+      "y": -110,
+      "width": 309,
+      "height": 100,
+      "text": "MARCH 2027",
+      "color": "#2a2a2a"
+    },
+    {
+      "id": "x52seu8db34d6d35",
+      "type": "text",
+      "x": 3309,
+      "y": -110,
+      "width": 296,
+      "height": 100,
+      "text": "APRIL 2027",
+      "color": "#323232"
+    },
+    {
+      "id": "vwri1if9pv62465b",
+      "type": "text",
+      "x": 3605,
+      "y": -110,
+      "width": 304,
+      "height": 100,
+      "text": "MAY 2027",
+      "color": "#2a2a2a"
+    },
+    {
+      "id": "q455wxctt8jqdzpk",
+      "type": "text",
+      "x": 3909,
+      "y": -110,
+      "width": 296,
+      "height": 100,
+      "text": "JUNE 2027",
+      "color": "#323232"
+    },
+    {
+      "id": "uhd3l18tcyeip8mw",
+      "type": "text",
+      "x": 4205,
+      "y": -110,
+      "width": 292,
+      "height": 100,
+      "text": "JULY 2027",
+      "color": "#2a2a2a"
+    },
+    {
+      "id": "s4wiajvss5lwevt8",
+      "type": "text",
+      "x": 4497,
+      "y": -110,
+      "width": 303,
+      "height": 100,
+      "text": "AUGUST 2027",
+      "color": "#323232"
+    },
+    {
+      "id": "e6g1wkcw9jayywcn",
+      "type": "text",
+      "x": 4800,
+      "y": -110,
+      "width": 50,
+      "height": 100,
+      "text": "SEPTEMBER 2027",
+      "color": "#2a2a2a"
+    },
+    {
+      "id": "ejuo0wu3ddat2u7f",
+      "type": "group",
+      "x": 0,
+      "y": -10,
+      "width": 1910,
+      "height": 1540,
+      "label": "PHASE 1",
+      "color": "#1a1a4a"
+    },
+    {
+      "id": "oqf5823o4ii3u8kl",
+      "type": "group",
+      "x": 1910,
+      "y": -10,
+      "width": 975,
+      "height": 1540,
+      "label": "PHASE 2",
+      "color": "#0d2d1a"
+    },
+    {
+      "id": "0555pn6h14idihh4",
+      "type": "group",
+      "x": 2885,
+      "y": -10,
+      "width": 2115,
+      "height": 1540,
+      "label": "PHASE 3",
+      "color": "#2a1a0d"
+    },
+    {
+      "id": "v9ju64a8xl4p1mik",
+      "type": "text",
+      "x": -220,
+      "y": 0,
+      "width": 210,
+      "height": 200,
+      "text": "**ROUGH GRADING\nPERMIT**",
+      "color": "#414141"
+    },
+    {
+      "id": "0erzwm4697rghnwm",
+      "type": "text",
+      "x": -220,
+      "y": 220,
+      "width": 210,
+      "height": 200,
+      "text": "**PRECISE GRADING\nPERMIT (A)**",
+      "color": "#414141"
+    },
+    {
+      "id": "wg3elo1szefjnveq",
+      "type": "text",
+      "x": -220,
+      "y": 440,
+      "width": 210,
+      "height": 200,
+      "text": "**PRECISE GRADING\nPERMIT (B)**",
+      "color": "#414141"
+    },
+    {
+      "id": "uewkaug41qs5fgda",
+      "type": "text",
+      "x": -220,
+      "y": 660,
+      "width": 210,
+      "height": 200,
+      "text": "**BUILDING\nPERMIT**",
+      "color": "#414141"
+    },
+    {
+      "id": "oop0grxtm1l2zsyj",
+      "type": "text",
+      "x": -220,
+      "y": 880,
+      "width": 210,
+      "height": 200,
+      "text": "**COASTAL\nPERMIT\nCOMPLIANCE**",
+      "color": "#414141"
+    },
+    {
+      "id": "6crfyh982j1yab3y",
+      "type": "text",
+      "x": -220,
+      "y": 1100,
+      "width": 210,
+      "height": 200,
+      "text": "**SUBST.\nCONFORMANCE**",
+      "color": "#414141"
+    },
+    {
+      "id": "aquwb4l042g6v689",
+      "type": "text",
+      "x": -220,
+      "y": 1320,
+      "width": 210,
+      "height": 100,
+      "text": "**ON-SITE\nGRADING**",
+      "color": "#414141"
+    },
+    {
+      "id": "d60o4qayndb4tlee",
+      "type": "text",
+      "x": -220,
+      "y": 1440,
+      "width": 210,
+      "height": 100,
+      "text": "**FOUNDATION +\nVERT. CONST.**",
+      "color": "#414141"
+    },
+    {
+      "id": "n17jn3zba9pept81",
+      "type": "text",
+      "x": -220,
+      "y": 1560,
+      "width": 210,
+      "height": 100,
+      "text": "**CDP\nEXTENSION**",
+      "color": "#414141"
+    },
+    {
+      "id": "wxb6kesz0z4dch6y",
+      "type": "text",
+      "x": 300,
+      "y": 0,
+      "width": 525,
+      "height": 200,
+      "text": "**RGP 1**\nROUGH GRADING PERMIT\nSUBMIT \u2192 SUB \u2192 REVIEW\n*CDP DESIGN*",
+      "color": "#bf1b2c"
+    },
+    {
+      "id": "yfwdevevcn31wjri",
+      "type": "text",
+      "x": 825,
+      "y": 0,
+      "width": 274,
+      "height": 200,
+      "text": "**RGP 2**\nROUGH GRADING PERMIT\nSUBMIT \u2192 SUB \u2192 REVIEW\n*BUILDING SHIFTS*",
+      "color": "#bf1b2c"
+    },
+    {
+      "id": "5yjlr4oh07o45f00",
+      "type": "text",
+      "x": 1099,
+      "y": 0,
+      "width": 811,
+      "height": 200,
+      "text": "**RGP**\nISPUANCE & BONDING\n*BUILDING SHIFTS*",
+      "color": "#bf1b2c"
+    },
+    {
+      "id": "yljvks22bkidzr5n",
+      "type": "text",
+      "x": 1890,
+      "y": -50,
+      "width": 160,
+      "height": 40,
+      "text": "**PAD CERT**",
+      "color": "#76a439"
+    },
+    {
+      "id": "62l5d0mwz4rha6tt",
+      "type": "text",
+      "x": 1171,
+      "y": 130,
+      "width": 512,
+      "height": 80,
+      "text": "OMEGA TRANSITION WITH ENGINEERING OF FINAL NEW DESIGN",
+      "color": "#fff3cd"
+    },
+    {
+      "id": "jun2t94qvd21dpr4",
+      "type": "text",
+      "x": 676,
+      "y": 220,
+      "width": 599,
+      "height": 200,
+      "text": "**PGP 4**\nPRECISE GRADING PERMIT\nSUBMIT \u2192 SUB \u2192 REVIEW\n*CDP DESIGN*",
+      "color": "#d67c2a"
+    },
+    {
+      "id": "qx61qgabdjk5bpvp",
+      "type": "text",
+      "x": 1275,
+      "y": 220,
+      "width": 269,
+      "height": 200,
+      "text": "**PGP 5**\nRE-SUBMIT \u2192 REVIEW \u2192 REVISIONS\n*CDP DESIGN*",
+      "color": "#d67c2a"
+    },
+    {
+      "id": "pde2jcaw4azfdka3",
+      "type": "text",
+      "x": 1544,
+      "y": 220,
+      "width": 405,
+      "height": 200,
+      "text": "**PGP**\nISPUANCE & BONDING\n*CDP DESIGN*",
+      "color": "#d67c2a"
+    },
+    {
+      "id": "vudq5dhf83hw1rd8",
+      "type": "text",
+      "x": 1949,
+      "y": 440,
+      "width": 600,
+      "height": 200,
+      "text": "**GCC 1**\nRE-SUBMIT \u2192 SUB \u2192 REVIEW \u2192 REVISIONS\n*FINAL DESIGN*",
+      "color": "#d67c2a"
+    },
+    {
+      "id": "o7pyy10x7rxjucaa",
+      "type": "text",
+      "x": 2549,
+      "y": 440,
+      "width": 277,
+      "height": 200,
+      "text": "**GCC 2**\nRE-SUBMIT \u2192 SUB \u2192 REVIEW\n*FINAL DESIGN*",
+      "color": "#d67c2a"
+    },
+    {
+      "id": "6c2p4018qvbta07y",
+      "type": "text",
+      "x": 2826,
+      "y": 440,
+      "width": 383,
+      "height": 200,
+      "text": "**GCC**\nAPPROVAL\n*FINAL DESIGN*",
+      "color": "#d67c2a"
+    },
+    {
+      "id": "36b7qgi0x583lusz",
+      "type": "text",
+      "x": 0,
+      "y": 660,
+      "width": 824,
+      "height": 200,
+      "text": "**BP 1**\nBUILDING PERMIT\nSUBMIT \u2192 SUB \u2192 REVIEW\n*CDP DESIGN*",
+      "color": "#77a439"
+    },
+    {
+      "id": "tg0jnoc8h2bzwdku",
+      "type": "text",
+      "x": 824,
+      "y": 660,
+      "width": 527,
+      "height": 200,
+      "text": "**BP 2**\nRE-SUBMIT \u2192 SUB \u2192 REVIEW \u2192 REVISIONS\n*CDP DESIGN*",
+      "color": "#77a439"
+    },
+    {
+      "id": "2343sdf7qrqctk8i",
+      "type": "text",
+      "x": 1351,
+      "y": 660,
+      "width": 576,
+      "height": 200,
+      "text": "**BP 3**\nRE-SUBMIT \u2192 SUB \u2192 REVIEW\n*CDP DESIGN*",
+      "color": "#77a439"
+    },
+    {
+      "id": "6e925ikfwy1ibvia",
+      "type": "text",
+      "x": 1927,
+      "y": 660,
+      "width": 546,
+      "height": 200,
+      "text": "**BP ISSUANCE**\n*CDP DESIGN*",
+      "color": "#77a439"
+    },
+    {
+      "id": "fnn1zu5rd6b80dym",
+      "type": "text",
+      "x": 1949,
+      "y": 880,
+      "width": 524,
+      "height": 200,
+      "text": "**CPC 1**\nBUILDING PERMIT\nSUBMIT \u2192 SUB \u2192 REVIEW \u2192 REVISIONS\n*ARCH REVISIONS*",
+      "color": "#0b8c55"
+    },
+    {
+      "id": "48hb9cjqwjfo4hts",
+      "type": "text",
+      "x": 2473,
+      "y": 880,
+      "width": 288,
+      "height": 200,
+      "text": "**CPC 2**\nSUBMIT \u2192 SUB \u2192 REVIEW \u2192 REVISIONS\n*ARCH REVISIONS*",
+      "color": "#0b8c55"
+    },
+    {
+      "id": "948kp4hgbfyrl8xo",
+      "type": "text",
+      "x": 2761,
+      "y": 880,
+      "width": 379,
+      "height": 200,
+      "text": "**CPC**\nAPPROVAL\n*FINAL DESIGN*",
+      "color": "#0b8c55"
+    },
+    {
+      "id": "xqmcazhojxezplhe",
+      "type": "text",
+      "x": 796,
+      "y": 1305,
+      "width": 609,
+      "height": 80,
+      "text": "LINDSAY AND RORY FINALIZE THE DESIGN AND AGREEMENT OF THE FINAL PRODUCT",
+      "color": "#e8f4f8"
+    },
+    {
+      "id": "5k829q2gyr48yx5w",
+      "type": "text",
+      "x": 2309,
+      "y": 1305,
+      "width": 484,
+      "height": 80,
+      "text": "BACK AND FORTH WITH THE CITY OF ENCINITAS, DETERMINING IF DESIGN CHANGES ARE ACCEPTABLE FOR BOTH ARCHITECTURE AND CIVIL DESIGN",
+      "color": "#e8f4f8"
+    },
+    {
+      "id": "vwpppnbyste4p62n",
+      "type": "text",
+      "x": 1951,
+      "y": 1100,
+      "width": 721,
+      "height": 200,
+      "text": "**SUBC 1**\nSUBST. CONFORMANCE\nSUBMIT \u2192 SUB\n*FINAL DESIGN*",
+      "color": "#4d59b1"
+    },
+    {
+      "id": "58b4ckolhojx7x0z",
+      "type": "text",
+      "x": 2672,
+      "y": 1100,
+      "width": 223,
+      "height": 200,
+      "text": "**SUBC 2**\nSUBMIT \u2192 SUB\n*FINAL DESIGN*",
+      "color": "#4d59b1"
+    },
+    {
+      "id": "6r54lzrobhluxvqh",
+      "type": "text",
+      "x": 2895,
+      "y": 1100,
+      "width": 384,
+      "height": 200,
+      "text": "**SUBC**\nAPPROVAL\n*FINAL DESIGN*",
+      "color": "#4d59b1"
+    },
+    {
+      "id": "8iht63xrls0awmk5",
+      "type": "text",
+      "x": 1394,
+      "y": 1320,
+      "width": 452,
+      "height": 100,
+      "text": "**ROUGH GRADING** \u2014 ON-SITE BEGINS\nFINAL DESIGN  |  TRIBES \u00b7 ARCHEO \u00b7 PALEO \u00b7 BIOLOGY",
+      "color": "#e2d929"
+    },
+    {
+      "id": "cn2jxxq3c92yqwg2",
+      "type": "text",
+      "x": 1846,
+      "y": 1320,
+      "width": 720,
+      "height": 100,
+      "text": "**PRECISE GRADING** \u2014 ON-SITE BEGINS\nFINAL DESIGN  |  TRIBES \u00b7 ARCHEO \u00b7 PALEO \u00b7 BIOLOGY",
+      "color": "#e2d929"
+    },
+    {
+      "id": "k27w8heaka9zdtcv",
+      "type": "text",
+      "x": 720,
+      "y": 1230,
+      "width": 581,
+      "height": 80,
+      "text": "Destiny Archeology, San Pascual Tribe, San Luis Rey Tribe developing Phase 2 Archaeological Assessment",
+      "color": "#f0f8e8"
+    },
+    {
+      "id": "skbz0kedy4u2kui3",
+      "type": "text",
+      "x": 2445,
+      "y": 1440,
+      "width": 468,
+      "height": 100,
+      "text": "**FOUNDATION**",
+      "color": "#401530"
+    },
+    {
+      "id": "n0e0gr9t4zruxymk",
+      "type": "text",
+      "x": 2913,
+      "y": 1440,
+      "width": 2185,
+      "height": 100,
+      "text": "**VERTICAL CONSTRUCTION**  |  18 MONTHS",
+      "color": "#401530"
+    },
+    {
+      "id": "dgydunww5n36kh2x",
+      "type": "text",
+      "x": 6,
+      "y": 1560,
+      "width": 646,
+      "height": 100,
+      "text": "**CDP** EXTENSION 1  |  CDP EXTENSION",
+      "color": "#af223d"
+    },
+    {
+      "id": "4uhgdmp24hqvrwub",
+      "type": "text",
+      "x": 652,
+      "y": 1560,
+      "width": 1914,
+      "height": 100,
+      "text": "**CDP** EXTENSION 1  |  EXTENSION ISSUED",
+      "color": "#af223d"
+    },
+    {
+      "id": "u4glabydyl8pokxj",
+      "type": "text",
+      "x": 2566,
+      "y": 1560,
+      "width": 574,
+      "height": 100,
+      "text": "**CDP**  PROJECT VESTED",
+      "color": "#af223d"
+    }
+  ],
+  "edges": []
+}
