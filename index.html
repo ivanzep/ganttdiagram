@@ -8,12 +8,12 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0d1117;
-  --bg2: #161b22;
-  --bg3: #1f2937;
-  --border: #30363d;
-  --text: #e6edf3;
-  --text2: #8b949e;
+  --bg: #ffffff;
+  --bg2: #f5f5f5;
+  --bg3: #ebebeb;
+  --border: #d0d0d0;
+  --text: #1a1a1a;
+  --text2: #555555;
   --accent: #231F20;
 
   --orange:  #D88738;
@@ -275,7 +275,7 @@ body {
   background: var(--border);
   border-radius: 1px;
 }
-.week-dot:first-child { background: #374151; }
+.week-dot:first-child { background: #b0b0b0; }
 
 /* ── Gantt Rows ── */
 .gantt-row {
@@ -285,7 +285,7 @@ body {
   display: flex;
   align-items: center;
 }
-.gantt-row:hover { background: rgba(255,255,255,0.015); }
+.gantt-row:hover { background: rgba(0,0,0,0.025); }
 
 /* Month column backgrounds */
 .gantt-row .month-cells {
@@ -300,8 +300,8 @@ body {
   height: 100%;
   border-right: 1px solid var(--border);
 }
-.month-cell.year-break { border-left: 2px solid rgba(216,135,56,0.3); }
-.month-cell.alt { background: rgba(255,255,255,0.01); }
+.month-cell.year-break { border-left: 2px solid rgba(216,135,56,0.4); }
+.month-cell.alt { background: rgba(0,0,0,0.025); }
 
 /* ── Bars ── */
 .bar {
@@ -313,14 +313,16 @@ body {
   flex-direction: column;
   justify-content: center;
   padding: 0 8px;
-  cursor: pointer;
+  cursor: grab;
   overflow: hidden;
   transition: filter .15s, transform .1s;
   z-index: 5;
   min-width: 24px;
+  user-select: none;
 }
+.bar:active { cursor: grabbing; }
 .bar:hover {
-  filter: brightness(1.2);
+  filter: brightness(1.1);
   z-index: 10;
   transform: scaleY(1.04);
 }
@@ -367,13 +369,13 @@ body {
   height: var(--bar-h);
   background: repeating-linear-gradient(
     -45deg,
-    rgba(176,46,65,0.12),
-    rgba(176,46,65,0.12) 4px,
+    rgba(176,46,65,0.15),
+    rgba(176,46,65,0.15) 4px,
     transparent 4px,
     transparent 8px
   );
   border-radius: 0 4px 4px 0;
-  border-left: 1px solid rgba(176,46,65,0.3);
+  border-left: 1px solid rgba(176,46,65,0.4);
   pointer-events: none;
   z-index: 4;
 }
@@ -394,7 +396,7 @@ body {
   font-size: 28px;
   font-weight: 900;
   letter-spacing: 4px;
-  color: rgba(46,48,146,0.6);
+  color: rgba(46,48,146,0.35);
   white-space: nowrap;
   padding: 0 4px;
   border-left: 3px solid rgba(46,48,146,0.4);
@@ -433,7 +435,7 @@ body {
 .cdp-row {
   height: 90px;
   position: relative;
-  background: #0a0f16;
+  background: var(--bg3);
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -504,7 +506,7 @@ body {
 .annotation.show-notes .annotation-box { display: block; }
 .annotation-box {
   display: none;
-  background: rgba(13,17,23,0.9);
+  background: rgba(255,255,255,0.95);
   border: 1px solid var(--orange);
   border-radius: 4px;
   padding: 6px 10px;
@@ -537,7 +539,7 @@ body {
 /* ── Tooltip ── */
 #tooltip {
   position: fixed;
-  background: rgba(22,27,34,0.97);
+  background: rgba(255,255,255,0.98);
   border: 1px solid var(--orange);
   border-radius: 6px;
   padding: 12px 16px;
@@ -548,7 +550,7 @@ body {
   opacity: 0;
   transition: opacity .15s;
   max-width: 320px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
 }
 #tooltip.visible { opacity: 1; }
 .tip-title {
@@ -647,12 +649,12 @@ body {
   font-size: 18px;
   font-weight: 900;
   letter-spacing: 3px;
-  color: rgba(255,255,255,0.9);
+  color: rgba(255,255,255,1);
   white-space: nowrap;
 }
 .const-label .cl-sub {
   font-size: 10px;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.75);
   letter-spacing: 1px;
   margin-top: 2px;
 }
@@ -704,6 +706,7 @@ body {
     <button class="ctrl-btn" onclick="zoomOut()">– ZOOM OUT</button>
     <button class="ctrl-btn" onclick="zoomReset()">RESET</button>
     <button class="ctrl-btn" id="notesBtn" onclick="toggleNotes()">SHOW NOTES</button>
+    <span style="font-size:10px;color:var(--text2);letter-spacing:0.5px;">Drag bars to move · Double-click to rename</span>
     <div class="legend">
       <div class="legend-item"><div class="legend-swatch" style="background:#D88738"></div>RGP / PGP Permit</div>
       <div class="legend-item"><div class="legend-swatch" style="background:#83A148"></div>Building Permit</div>
@@ -745,6 +748,7 @@ const TODAY_MONTH = 1 + 26/30;
 let currentVersion = 'v1';
 let showNotes = false;
 let zoomLevel = 1.0;
+let isDragging = false;
 
 // ──────────────────────────────────────────────
 // HELPERS
@@ -1387,19 +1391,93 @@ function render() {
         ${bar.action && wide ? `<div class="bar-action">${bar.action}</div>` : ''}
       `;
 
-      barEl.addEventListener('mouseenter', e => showTip(e, bar));
-      barEl.addEventListener('mousemove',  e => moveTip(e));
+      barEl.addEventListener('mouseenter', e => { if (!isDragging) showTip(e, bar); });
+      barEl.addEventListener('mousemove',  e => { if (!isDragging) moveTip(e); });
       barEl.addEventListener('mouseleave', hideTip);
-      container.appendChild(barEl);
 
-      // Review period stripe
+      // Review stripe (created before drag handler so drag can move it)
+      let reviewEl = null;
       if (bar.review) {
-        const rv = document.createElement('div');
-        rv.className = 'bar-review';
-        rv.style.left  = pct(bar.review.start);
-        rv.style.width = pctW(bar.review.start, bar.review.end);
-        container.appendChild(rv);
+        reviewEl = document.createElement('div');
+        reviewEl.className = 'bar-review';
+        const reviewOffset = bar.review.start - bar.start;
+        const reviewDur    = bar.review.end   - bar.review.start;
+        reviewEl.style.left  = pct(bar.review.start);
+        reviewEl.style.width = pctW(bar.review.start, bar.review.end);
       }
+
+      // ── Drag to move ──────────────────────────
+      barEl.addEventListener('mousedown', e => {
+        if (e.button !== 0 || e.detail >= 2) return;
+        e.preventDefault();
+        e.stopPropagation();
+        hideTip();
+        isDragging = true;
+        barEl.style.transition = 'none';
+        barEl.style.zIndex = '50';
+        const chartW = container.offsetWidth;
+        const startX = e.clientX;
+        const origStart      = bar.start;
+        const origEnd        = bar.end;
+        const duration       = origEnd - origStart;
+        const revOffset      = bar.review ? (bar.review.start - origStart) : 0;
+        const revDur         = bar.review ? (bar.review.end - bar.review.start) : 0;
+
+        function onMove(ev) {
+          const deltaMonths = (ev.clientX - startX) / chartW * TOTAL;
+          const newStart = Math.max(0, Math.min(TOTAL - duration, origStart + deltaMonths));
+          bar.start = newStart;
+          bar.end   = newStart + duration;
+          barEl.style.left = pct(bar.start);
+          if (reviewEl && bar.review) {
+            bar.review.start = newStart + revOffset;
+            bar.review.end   = bar.review.start + revDur;
+            reviewEl.style.left  = pct(bar.review.start);
+          }
+        }
+        function onUp() {
+          isDragging = false;
+          barEl.style.transition = '';
+          barEl.style.zIndex = '';
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup',   onUp);
+        }
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup',   onUp);
+      });
+
+      // ── Double-click to edit label ────────────
+      barEl.addEventListener('dblclick', e => {
+        e.stopPropagation();
+        hideTip();
+        const codeEl = barEl.querySelector('.bar-code');
+        if (!codeEl) return;
+        const origText = bar.code;
+        const inp = document.createElement('input');
+        inp.type = 'text';
+        inp.value = bar.code.replace(/\n/g, ' ');
+        inp.style.cssText = 'width:90%;font-size:11px;font-weight:900;letter-spacing:0.5px;' +
+          'background:rgba(0,0,0,0.15);border:none;border-bottom:2px solid rgba(255,255,255,0.8);' +
+          'color:inherit;outline:none;padding:1px 2px;';
+        codeEl.replaceWith(inp);
+        inp.focus(); inp.select();
+        function commit() {
+          bar.code = inp.value.trim() || origText;
+          const newCode = document.createElement('div');
+          newCode.className = 'bar-code';
+          newCode.style.fontSize = wide ? '11px' : '9px';
+          newCode.textContent = bar.code;
+          inp.replaceWith(newCode);
+        }
+        inp.addEventListener('blur', commit);
+        inp.addEventListener('keydown', ev => {
+          if (ev.key === 'Enter') { commit(); }
+          if (ev.key === 'Escape') { bar.code = origText; commit(); }
+        });
+      });
+
+      container.appendChild(barEl);
+      if (reviewEl) container.appendChild(reviewEl);
 
       // Tribes label
       if (bar.tribes) {
@@ -1433,8 +1511,8 @@ function render() {
     if (row.note) {
       const n = document.createElement('div');
       n.className = 'callout' + (showNotes ? '' : ' hidden');
-      n.style.cssText = `top:2px;right:4px;color:#B02E41;font-size:9px;background:rgba(13,17,23,0.9);
-        border:1px solid rgba(176,46,65,0.4);border-radius:3px;padding:3px 6px;`;
+      n.style.cssText = `top:2px;right:4px;color:#B02E41;font-size:9px;background:rgba(255,255,255,0.95);
+        border:1px solid rgba(176,46,65,0.5);border-radius:3px;padding:3px 6px;`;
       n.textContent = row.note;
       rowEl.appendChild(n);
     }
@@ -1532,8 +1610,8 @@ function render() {
       ann.className = 'callout';
       ann.style.cssText = `position:absolute;top:2px;left:${pct(note.month)};
         color:${note.row === 'construction' ? '#fff' : '#B02E41'};
-        font-size:9px;background:rgba(13,17,23,0.9);
-        border:1px solid rgba(176,46,65,0.4);border-radius:3px;padding:4px 7px;z-index:20;`;
+        font-size:9px;background:rgba(255,255,255,0.95);
+        border:1px solid rgba(176,46,65,0.5);border-radius:3px;padding:4px 7px;z-index:20;`;
       ann.textContent = note.text;
       targetRow.style.position = 'relative';
       targetRow.appendChild(ann);
