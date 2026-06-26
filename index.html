@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LA COSTA HOTEL – Project Schedule</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0d1117;
+  --bg2: #161b22;
+  --bg3: #1f2937;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text2: #8b949e;
+  --accent: #231F20;
+
+  --orange:  #D88738;
+  --green:   #83A148;
+  --blue:    #4D62AD;
+  --purple:  #471136;
+  --yellow:  #E8D641;
+  --red:     #BE1D2C;
+  --teal:    #008B53;
+  --berry:   #B02E41;
+  --phase:   #2E3092;
+  --review:  rgba(176,46,65,0.18);
+  --cdp-bar: #9CA3AF;
+  --gray-bar:#E2E3E4;
+
+  --row-h: 88px;
+  --bar-h: 58px;
+  --bar-pad: 15px;
+  --month-w: 112px;
+  --label-w: 160px;
+  --hdr-h: 72px;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── App Header ── */
+.app-header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.title-main {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: var(--text);
+}
+.title-sub {
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--text2);
+  display: block;
+  margin-top: 2px;
+}
+.update-date {
+  font-size: 11px;
+  color: var(--text2);
+  letter-spacing: 1px;
+}
+
+/* ── Tabs ── */
+.tab-nav {
+  background: var(--bg2);
+  padding: 0 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 2px;
+}
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--text2);
+  padding: 12px 22px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: color .2s, border-color .2s;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active {
+  color: var(--text);
+  border-bottom-color: var(--orange);
+}
+
+/* ── Version Banner ── */
+.version-banner {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 24px;
+  font-size: 11px;
+  color: var(--text2);
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+}
+.version-banner strong { color: var(--orange); }
+
+/* ── Controls ── */
+.controls {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.ctrl-btn {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  padding: 5px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 1px;
+  transition: background .2s, color .2s;
+}
+.ctrl-btn:hover { background: var(--border); color: var(--text); }
+.ctrl-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+.legend {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--text2);
+}
+.legend-swatch {
+  width: 14px; height: 14px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ── Timeline Layout ── */
+.timeline-outer {
+  overflow-x: auto;
+  overflow-y: auto;
+  position: relative;
+  max-height: calc(100vh - 200px);
+}
+.timeline-wrap {
+  display: flex;
+  min-width: max-content;
+}
+
+/* ── Row Labels (sticky) ── */
+.row-labels {
+  width: var(--label-w);
+  flex-shrink: 0;
+  position: sticky;
+  left: 0;
+  z-index: 20;
+  background: var(--bg2);
+  border-right: 2px solid var(--border);
+}
+.label-hdr {
+  height: var(--hdr-h);
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-end;
+  padding: 0 12px 8px;
+  font-size: 10px;
+  color: var(--text2);
+  letter-spacing: 1px;
+}
+.row-label {
+  height: var(--row-h);
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid var(--border);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.4;
+  color: var(--text2);
+}
+.row-label .row-type {
+  font-size: 9px;
+  font-weight: 400;
+  color: #6b7280;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+/* ── Chart Area ── */
+.chart-area {
+  flex: 1;
+  position: relative;
+}
+
+/* ── Month Header ── */
+.month-header {
+  height: var(--hdr-h);
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  background: var(--bg2);
+  border-bottom: 2px solid var(--border);
+}
+.month-col-hdr {
+  width: var(--month-w);
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 4px 4px;
+  position: relative;
+}
+.month-col-hdr.current-month-hdr::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid #ef4444;
+}
+.month-col-hdr.year-break {
+  border-left: 2px solid var(--orange);
+}
+.month-abbr {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text);
+}
+.month-year {
+  font-size: 9px;
+  color: var(--text2);
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+.month-week-markers {
+  display: flex;
+  width: 100%;
+  margin-top: 4px;
+  gap: 1px;
+}
+.week-dot {
+  width: 25%;
+  height: 3px;
+  background: var(--border);
+  border-radius: 1px;
+}
+.week-dot:first-child { background: #374151; }
+
+/* ── Gantt Rows ── */
+.gantt-row {
+  height: var(--row-h);
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+}
+.gantt-row:hover { background: rgba(255,255,255,0.015); }
+
+/* Month column backgrounds */
+.gantt-row .month-cells {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  pointer-events: none;
+}
+.month-cell {
+  width: var(--month-w);
+  flex-shrink: 0;
+  height: 100%;
+  border-right: 1px solid var(--border);
+}
+.month-cell.year-break { border-left: 2px solid rgba(216,135,56,0.3); }
+.month-cell.alt { background: rgba(255,255,255,0.01); }
+
+/* ── Bars ── */
+.bar {
+  position: absolute;
+  top: var(--bar-pad);
+  height: var(--bar-h);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 8px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: filter .15s, transform .1s;
+  z-index: 5;
+  min-width: 24px;
+}
+.bar:hover {
+  filter: brightness(1.2);
+  z-index: 10;
+  transform: scaleY(1.04);
+}
+.bar-code {
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bar-sub {
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  opacity: 0.85;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bar-action {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+  margin-top: 1px;
+  white-space: nowrap;
+}
+.bar.outlined {
+  background: transparent !important;
+  border: 2px solid;
+}
+.bar.milestone-bar {
+  border-radius: 6px;
+  border: 2px solid;
+  background: transparent !important;
+}
+
+/* Review Period Stripe */
+.bar-review {
+  position: absolute;
+  top: var(--bar-pad);
+  height: var(--bar-h);
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(176,46,65,0.12),
+    rgba(176,46,65,0.12) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  border-radius: 0 4px 4px 0;
+  border-left: 1px solid rgba(176,46,65,0.3);
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* ── Phase Markers ── */
+.phase-marker {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  z-index: 8;
+  pointer-events: none;
+}
+.phase-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: rgba(46,48,146,0.6);
+  white-space: nowrap;
+  padding: 0 4px;
+  border-left: 3px solid rgba(46,48,146,0.4);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Milestone Markers ── */
+.milestone {
+  position: absolute;
+  z-index: 8;
+  top: var(--bar-pad);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.milestone-diamond {
+  width: 12px; height: 12px;
+  background: currentColor;
+  transform: rotate(45deg);
+  margin-bottom: 4px;
+}
+.milestone-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+/* ── CDP Row ── */
+.cdp-row {
+  height: 90px;
+  position: relative;
+  background: #0a0f16;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+}
+.cdp-milestone {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 5;
+  cursor: pointer;
+}
+.cdp-milestone:hover .cdp-tip { opacity: 1; }
+.cdp-pole {
+  width: 2px;
+  height: 40px;
+  background: currentColor;
+  opacity: 0.6;
+}
+.cdp-flag {
+  padding: 4px 8px;
+  border-radius: 3px;
+  border: 1px solid currentColor;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-align: center;
+  line-height: 1.3;
+  background: var(--bg);
+  white-space: nowrap;
+}
+.cdp-bar {
+  position: absolute;
+  background: rgba(226,227,228,0.15);
+  border: 1px solid rgba(226,227,228,0.3);
+  border-radius: 3px;
+}
+
+/* ── Today Line ── */
+.today-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #ef4444;
+  opacity: 0.8;
+  z-index: 12;
+  pointer-events: none;
+}
+.today-line::before {
+  content: 'TODAY';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #ef4444;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* ── Annotation Callouts ── */
+.annotation {
+  position: absolute;
+  z-index: 6;
+  pointer-events: none;
+}
+.annotation.show-notes .annotation-box { display: block; }
+.annotation-box {
+  display: none;
+  background: rgba(13,17,23,0.9);
+  border: 1px solid var(--orange);
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 10px;
+  color: var(--orange);
+  letter-spacing: 0.3px;
+  line-height: 1.5;
+  max-width: 240px;
+  white-space: pre-line;
+}
+.annotation-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--orange);
+  opacity: 0.7;
+}
+
+/* ── Grading Labels ── */
+.site-label {
+  position: absolute;
+  font-size: 9px;
+  font-weight: 700;
+  color: #6b7280;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ── Tooltip ── */
+#tooltip {
+  position: fixed;
+  background: rgba(22,27,34,0.97);
+  border: 1px solid var(--orange);
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: var(--text);
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity .15s;
+  max-width: 320px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+#tooltip.visible { opacity: 1; }
+.tip-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--orange);
+  margin-bottom: 6px;
+}
+.tip-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 3px;
+  font-size: 11px;
+}
+.tip-key { color: var(--text2); min-width: 80px; }
+.tip-val { color: var(--text); font-weight: 600; }
+
+/* ── PAD CERT Marker ── */
+.pad-cert {
+  position: absolute;
+  z-index: 9;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+.pad-cert-inner {
+  width: 3px;
+  height: 60%;
+  background: #ED1C24;
+  position: relative;
+}
+.pad-cert-label {
+  position: absolute;
+  top: 0;
+  left: 6px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ED1C24;
+  white-space: nowrap;
+}
+
+/* ── Approval Markers ── */
+.approval-tag {
+  position: absolute;
+  z-index: 7;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg) translateX(50%);
+  padding: 4px 2px;
+  border-radius: 3px;
+  border: 1px solid;
+  background: var(--bg);
+  white-space: nowrap;
+  cursor: default;
+}
+
+/* ── Tribes Label ── */
+.tribes-label {
+  position: absolute;
+  right: -3px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 8px;
+  color: var(--text2);
+  text-align: left;
+  line-height: 1.6;
+  pointer-events: none;
+}
+.bar-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Construction Labels ── */
+.const-label {
+  position: absolute;
+  top: var(--bar-pad);
+  height: var(--bar-h);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 10px;
+  pointer-events: none;
+  z-index: 6;
+}
+.const-label .cl-main {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.9);
+  white-space: nowrap;
+}
+.const-label .cl-sub {
+  font-size: 10px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+/* ── Note callout boxes ── */
+.callout {
+  position: absolute;
+  border-radius: 4px;
+  padding: 5px 8px;
+  font-size: 9.5px;
+  line-height: 1.45;
+  letter-spacing: 0.3px;
+  z-index: 3;
+  pointer-events: none;
+  max-width: 200px;
+  white-space: pre-line;
+}
+.callout.hidden { display: none; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  :root { --month-w: 80px; --label-w: 120px; --row-h: 72px; --bar-h: 48px; }
+  .bar-code { font-size: 10px; }
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <header class="app-header">
+    <div>
+      <span class="title-main">LA COSTA HOTEL</span>
+      <span class="title-sub" id="versionLabel">PROJECT SCHEDULE – V1</span>
+    </div>
+    <span class="update-date">UPDATED: JUNE 23, 2026</span>
+  </header>
+
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="setVersion('v1')">V1 – ORIGINAL</button>
+    <button class="tab-btn" onclick="setVersion('v2')">V2 – ROW HOMES</button>
+    <button class="tab-btn" onclick="setVersion('v3')">V3 – BUILDING SHIFTS</button>
+    <button class="tab-btn" onclick="setVersion('v4')">V4 – FINAL DESIGN?</button>
+  </nav>
+
+  <div class="version-banner" id="versionBanner"></div>
+
+  <div class="controls">
+    <button class="ctrl-btn" onclick="zoomIn()">+ ZOOM IN</button>
+    <button class="ctrl-btn" onclick="zoomOut()">– ZOOM OUT</button>
+    <button class="ctrl-btn" onclick="zoomReset()">RESET</button>
+    <button class="ctrl-btn" id="notesBtn" onclick="toggleNotes()">SHOW NOTES</button>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-swatch" style="background:#D88738"></div>RGP / PGP Permit</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#83A148"></div>Building Permit</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#4D62AD"></div>Subst. Conformance</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#008B53"></div>Coastal Plan</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#E8D641"></div>Site Grading</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#471136"></div>Construction</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#BE1D2C"></div>RGP (Revised)</div>
+    </div>
+  </div>
+
+  <div class="timeline-outer" id="timelineOuter">
+    <div class="timeline-wrap" id="timelineWrap">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+</div>
+
+<div id="tooltip"></div>
+
+<script>
+// ──────────────────────────────────────────────
+// CONSTANTS
+// ──────────────────────────────────────────────
+const MONTHS = [
+  {abbr:'MAY',  year:'2026'}, {abbr:'JUN', year:'2026'}, {abbr:'JUL',  year:'2026'},
+  {abbr:'AUG',  year:'2026'}, {abbr:'SEP', year:'2026'}, {abbr:'OCT',  year:'2026'},
+  {abbr:'NOV',  year:'2026'}, {abbr:'DEC', year:'2026'}, {abbr:'JAN',  year:'2027'},
+  {abbr:'FEB',  year:'2027'}, {abbr:'MAR', year:'2027'}, {abbr:'APR',  year:'2027'},
+  {abbr:'MAY',  year:'2027'}, {abbr:'JUN', year:'2027'}, {abbr:'JUL',  year:'2027'},
+  {abbr:'AUG',  year:'2027'}, {abbr:'SEP', year:'2027'}
+];
+const TOTAL = 17;
+
+// Current date: June 26, 2026 → month index ~1.87
+// May=0, Jun=1, Jul=2... Jun 26 = 1 + 26/30 ≈ 1.87
+const TODAY_MONTH = 1 + 26/30;
+
+let currentVersion = 'v1';
+let showNotes = false;
+let zoomLevel = 1.0;
+
+// ──────────────────────────────────────────────
+// HELPERS
+// ──────────────────────────────────────────────
+function pct(m) { return (m / TOTAL * 100).toFixed(4) + '%'; }
+function pctW(s, e) { return ((e - s) / TOTAL * 100).toFixed(4) + '%'; }
+
+// Convert PDF x-coordinate to month index
+function xm(x) { return (x - 159) / 288; }
+
+// ──────────────────────────────────────────────
+// DATA
+// ──────────────────────────────────────────────
+const VERSIONS = {
+
+// ════════════════════════════════════════════
+// VERSION 1
+// ════════════════════════════════════════════
+v1: {
+  title: 'PROJECT SCHEDULE – V1',
+  banner: '<strong>V1 – ORIGINAL DESIGN:</strong> Standard hotel design. Omega preparing entirely new grading design with changes to parking, pool, building locations, and BMP. Design finalization between Lindsay and Rory.',
+  phases: [
+    { month: xm(535),  label: 'PHASE 1', note: 'Initial CDP Design Phase' },
+    { month: xm(1836), label: 'PHASE 2', note: 'Design Revision & Change Pad Locations' },
+    { month: xm(3566), label: 'PHASE 3', note: 'Final Design & Construction' }
+  ],
+  rows: [
+    // ── ROUGH GRADING PERMIT ──────────────────
+    {
+      id: 'rgp', label: 'ROUGH\nGRADING\nPERMIT', type: 'RGP',
+      bars: [
+        { code:'RGPSUB1', start:xm(648),  end:xm(936),  color:'#D88738', sub:'CDP DESIGN',  action:'SUBMIT',    review:{start:xm(843),end:xm(936)},
+          tip:'First submission of Rough Grading Permit during CDP Design phase.' },
+        { code:'RGPSUB2', start:xm(1080), end:xm(1368), color:'#D88738', sub:'CDP DESIGN',  action:'RE-SUBMIT', review:{start:xm(1275),end:xm(1368)},
+          tip:'Second submission of RGP after initial review. CDP Design phase.' },
+        { code:'RGP\nISSUANCE', start:xm(1368), end:xm(1728), color:'#D88738', sub:'ISSUANCE & BONDING · CDP DESIGN', action:'',
+          tip:'Rough Grading Permit issued and bonding finalized.' }
+      ],
+      approvals: [
+        { month:xm(1354), label:'APPROVAL', color:'#83A148', tip:'RGP Approved' }
+      ]
+    },
+    // ── PRECISE GRADING PERMIT ────────────────
+    {
+      id: 'pgp', label: 'PRECISE\nGRADING\nPERMIT', type: 'PGP',
+      bars: [
+        { code:'PGPSUB4', start:xm(1440), end:xm(1728), color:'#D88738', sub:'FINAL DESIGN', action:'SUBMIT',    review:{start:xm(1632),end:xm(1728)},
+          tip:'4th submission of Precise Grading Permit. Final Design phase.' },
+        { code:'PGPSUB5', start:xm(2014), end:xm(2306), color:'#D88738', sub:'FINAL DESIGN', action:'RE-SUBMIT', review:{start:xm(2213),end:xm(2306)},
+          tip:'5th submission (re-submit) of PGP. Final Design phase.' },
+        { code:'PGP\nISSUANCE', start:xm(2450), end:xm(2738), color:'#D88738', sub:'ISSUANCE & BONDING · FINAL DESIGN', action:'',
+          tip:'Precise Grading Permit issued and bonding finalized.' },
+        { code:'PGP\nPERMIT', start:xm(2744), end:xm(2977), color:'#B02E41', sub:'PERMIT ISSUANCE · FINAL DESIGN', action:'', outlined:true,
+          tip:'PGP Permit formally issued.' }
+      ],
+      approvals: [
+        { month:xm(2471), label:'APPROVAL', color:'#83A148', tip:'PGP Approved' }
+      ]
+    },
+    // ── BUILDING PERMIT ───────────────────────
+    {
+      id: 'bp', label: 'BUILDING\nPERMIT', type: 'BP',
+      bars: [
+        { code:'BPSUB1', start:xm(431),  end:xm(863),  color:'#83A148', sub:'CDP DESIGN',  action:'SUBMIT',    review:{start:xm(622),end:xm(863)},
+          tip:'1st Building Permit submission. CDP Design phase.' },
+        { code:'BPSUB2', start:xm(1151), end:xm(1440), color:'#83A148', sub:'CDP DESIGN',  action:'RE-SUBMIT', review:{start:xm(1327),end:xm(1440)},
+          tip:'2nd BP submission. CDP Design re-submit.' },
+        { code:'BPSUB3', start:xm(1729), end:xm(2018), color:'#83A148', sub:'FINAL DESIGN', action:'RE-SUBMIT', review:{start:xm(1906),end:xm(2018)},
+          tip:'3rd BP submission. Now in Final Design phase.' },
+        { code:'BPSUB4', start:xm(2303), end:xm(2593), color:'#83A148', sub:'FINAL DESIGN', action:'RE-SUBMIT', review:{start:xm(2481),end:xm(2593)},
+          tip:'4th BP submission. Final Design phase.' },
+        { code:'BPSUB5', start:xm(2877), end:xm(3166), color:'#83A148', sub:'FINAL DESIGN', action:'RE-SUBMIT', review:{start:xm(3055),end:xm(3166)},
+          tip:'5th BP submission. Final Design phase.' },
+        { code:'BP\nAPPROVAL', start:xm(3167), end:xm(3311), color:'#B02E41', sub:'FINAL DESIGN', action:'', outlined:true,
+          tip:'Building Permit Approved by City.' },
+        { code:'BP\nPERMIT', start:xm(3459), end:xm(3657), color:'#B02E41', sub:'PERMIT ISSUANCE · FINAL DESIGN', action:'', outlined:true,
+          tip:'Building Permit formally issued. Construction can begin.' }
+      ],
+      approvals: [
+        { month:xm(3439), label:'APPROVAL', color:'#83A148', tip:'BP Approved' }
+      ],
+      note: 'SUBMITTING THE SEPTEMBER 1ST PRECISE GRADING PERMIT IMMEDIATELY STOPS/ALTERS THE ABILITY FOR BUILDING PERMIT ISSUANCE, BUT REVIEWS CONTINUE'
+    },
+    // ── SUBSTANTIAL CONFORMANCE ───────────────
+    {
+      id: 'subc', label: 'SUBST.\nCONFORMANCE', type: 'SUBC',
+      bars: [
+        { code:'SUBCCSUB1', start:xm(1440), end:xm(1728), color:'#4D62AD', sub:'FINAL DESIGN', action:'SUBMIT',
+          tip:'First Substantial Conformance submission. Final Design phase.' },
+        { code:'SUBCCSUB2', start:xm(3168), end:xm(3456), color:'#4D62AD', sub:'FINAL DESIGN', action:'SUBMIT',
+          tip:'Second Substantial Conformance submission.' },
+        { code:'SUBC\nAPPROVAL', start:xm(3459), end:xm(3674), color:'#B02E41', sub:'FINAL DESIGN', action:'', outlined:true,
+          tip:'Substantial Conformance Approved.' }
+      ]
+    },
+    // ── SITE GRADING ──────────────────────────
+    {
+      id: 'grading', label: 'SITE\nGRADING', type: 'ON-SITE',
+      bars: [
+        { code:'ROUGH\nGRADING', start:xm(1729), end:xm(2307), color:'#E8D641', sub:'CDP DESIGN · ON-SITE BEGINS', action:'',
+          tip:'Rough Grading on-site begins. Tribes, Archaeological, Paleontological and Biological monitoring required.',
+          tribes: true },
+        { code:'PRECISE\nGRADING', start:xm(2736), end:xm(3312), color:'#E8D641', sub:'CDP DESIGN · ON-SITE BEGINS', action:'',
+          tip:'Precise Grading on-site begins. Environmental monitoring continues.',
+          tribes: true }
+      ]
+    },
+    // ── VERTICAL CONSTRUCTION ─────────────────
+    {
+      id: 'construction', label: 'VERTICAL\nCONSTRUCTION', type: '',
+      bars: [
+        { code:'VERTICAL CONSTRUCTION', start:xm(3456), end:xm(4896), color:'#471136', sub:'18 MONTHS', action:'',
+          tip:'Vertical construction begins. Estimated 18 months to completion.' }
+      ]
+    }
+  ],
+  cdpRow: {
+    milestones: [
+      { month:xm(375),  code:'CDP EXT1',    label:'CDP\nEXT1\nCDP EXTENSION',  color:'#B02E41',
+        tip:'CDP Extension 1 – Initial extension of Coastal Development Permit.' },
+      { month:xm(1373), code:'CDP EXT1',    label:'CDP\nEXT1\nEXTENSION ISSUED', color:'#B02E41',
+        tip:'CDP Extension 1 formally issued.' },
+      { month:xm(3250), code:'CDP EXT2',    label:'CDP\nEXT2\nCDP EXTENSION',  color:'#B02E41',
+        tip:'CDP Extension 2 – Second extension of Coastal Development Permit.' },
+      { month:xm(3800), code:'CDP VESTED',  label:'CDP\nPROJECT VESTED',       color:'#B02E41',
+        tip:'Project Vested – CDP rights established.' }
+    ]
+  },
+  notes: [
+    { month:xm(1157), row:'rgp',      text:'OMEGA PREPARING NEW GRADING DESIGN:\nENTIRELY NEW DESIGN WITH CHANGES TO\nPARKING, POOL, BUILDING LOCATIONS, BMP' },
+    { month:xm(1013), row:'rgp',      text:'REVISIONS' },
+    { month:xm(1013), row:'pgp',      text:'REVISIONS' },
+    { month:xm(1013), row:'bp',       text:'CHANGE PAD LOCATIONS' },
+    { month:xm(1016), row:'subc',     text:'LINDSAY AND RORY FINALIZE THE\nDESIGN AND AGREEMENT OF THE FINAL PRODUCT' },
+    { month:xm(2440), row:'bp',       text:'BACK AND FORTH WITH THE CITY OF ENCINITAS,\nDETERMINING IF DESIGN CHANGES ARE ACCEPTABLE\nFOR BOTH ARCHITECTURE AND CIVIL DESIGN' },
+    { month:xm(1930), row:'pgp',      text:'SUBMITTING THE SEPTEMBER 1ST PRECISE GRADING\nPERMIT IMMEDIATELY STOPS/ALTERS THE ABILITY FOR\nBUILDING PERMIT ISSUANCE, BUT REVIEWS CONTINUE' },
+    { month:xm(1315), row:'grading',  text:'DESTINY ARCHEOLOGY, SAN PASCUAL TRIBE,\nSAN LUIS REY TRIBE DEVELOPING PHASE TWO\nARCHEOLOGICAL ASSESSMENT' }
+  ]
+},
+
+// ════════════════════════════════════════════
+// VERSION 2
+// ════════════════════════════════════════════
+v2: {
+  title: 'PROJECT SCHEDULE – V2',
+  banner: '<strong>V2 – ROW HOMES DESIGN:</strong> Omega preparing new grading design for Row Homes. Two-phase vertical construction: First 5 Row Homes (3 months) then Final Design (15 months). Building Permit on hold until Sub-C processed and approved.',
+  phases: [
+    { month:xm(535),  label:'PHASE 1', note:'Initial CDP Design Phase' },
+    { month:xm(3566), label:'PHASE 3', note:'Row Homes Construction' }
+  ],
+  rows: [
+    {
+      id: 'rgp', label: 'ROUGH\nGRADING\nPERMIT', type: 'RGP',
+      bars: [
+        { code:'RGPSUB1', start:xm(648),  end:xm(936),  color:'#D88738', sub:'CDP DESIGN',  action:'SUBMIT', review:{start:xm(843),end:xm(936)},
+          tip:'1st Rough Grading Permit submission. CDP Design phase.' },
+        { code:'RGPSUB2', start:xm(1080), end:xm(1368), color:'#D88738', sub:'CDP DESIGN',  action:'RE-SUBMIT', review:{start:xm(1275),end:xm(1368)},
+          tip:'2nd RGP submission. CDP Design re-submit.' },
+        { code:'RGP\nISSUANCE', start:xm(1368), end:xm(1656), color:'#D88738', sub:'ISSUANCE & BONDING · CDP DESIGN', action:'',
+          tip:'RGP issued and bonding finalized.' }
+      ],
+      approvals: [
+        { month:xm(1354), label:'APPROVAL', color:'#83A148', tip:'RGP Approved' }
+      ]
+    },
+    {
+      id: 'pgp', label: 'PRECISE\nGRADING\nPERMIT', type: 'PGP',
+      bars: [
+        { code:'PGPSUB1', start:xm(2015), end:xm(2303), color:'#D88738', sub:'ROW HOME DESIGN', action:'SUBMIT',
+          tip:'PGP Sub 1 – Row Home Design submission.' },
+        { code:'PGPSUB2', start:xm(2876), end:xm(3164), color:'#D88738', sub:'ROW HOME DESIGN', action:'RE-SUBMIT',
+          tip:'PGP Sub 2 – Re-submit for Row Home Design.' },
+        { code:'PGPSUB3', start:xm(3456), end:xm(3743), color:'#D88738', sub:'FINAL DESIGN',    action:'RE-SUBMIT',
+          tip:'PGP Sub 3 – Final Design re-submit.' },
+        { code:'PGPSUB4', start:xm(3886), end:xm(4174), color:'#D88738', sub:'FINAL DESIGN',    action:'RE-SUBMIT',
+          tip:'PGP Sub 4 – Final Design re-submit.' },
+        { code:'PGP\nISSUANCE', start:xm(4176), end:xm(4464), color:'#D88738', sub:'ISSUANCE & BONDING · FINAL DESIGN', action:'',
+          tip:'PGP issued and bonding finalized.' }
+      ],
+      approvals: [
+        { month:xm(3131), label:'APPROVAL', color:'#83A148', tip:'PGP Approved (Phase 1)' },
+        { month:xm(4143), label:'APPROVAL', color:'#83A148', tip:'PGP Approved (Phase 2)' }
+      ]
+    },
+    {
+      id: 'bp', label: 'BUILDING\nPERMIT', type: 'BP',
+      bars: [
+        { code:'BPSUB1', start:xm(431),  end:xm(863),  color:'#83A148', sub:'CDP DESIGN',      action:'SUBMIT',    review:{start:xm(622),end:xm(863)},
+          tip:'1st BP submission. CDP Design phase.' },
+        { code:'BPSUB2', start:xm(1151), end:xm(1440), color:'#83A148', sub:'CDP DESIGN',      action:'RE-SUBMIT', review:{start:xm(1327),end:xm(1440)},
+          tip:'2nd BP submission. CDP Design re-submit.' },
+        { code:'BPSUB3', start:xm(1584), end:xm(1873), color:'#83A148', sub:'CDP DESIGN',      action:'RE-SUBMIT', review:{start:xm(1760),end:xm(1873)},
+          tip:'3rd BP submission. CDP Design.' },
+        { code:'BP\nAPPROVAL', start:xm(1873), end:xm(2018), color:'#B02E41', sub:'CDP DESIGN', action:'', outlined:true,
+          tip:'Building Permit Approved.' },
+        { code:'BPSUB(RH)', start:xm(2016), end:xm(2304), color:'#83A148', sub:'ROW HOME DESIGN', action:'SUBMIT',
+          tip:'Building Permit for Row Home Design.' },
+        { code:'BPSUB5', start:xm(3166), end:xm(3455), color:'#83A148', sub:'FINAL DESIGN',    action:'RE-SUBMIT',
+          tip:'5th BP submission. Final Design.' },
+        { code:'BPSUB(FD)', start:xm(4178), end:xm(4466), color:'#83A148', sub:'FINAL DESIGN', action:'SUBMIT',
+          tip:'Final Design Building Permit submission.' }
+      ],
+      note:'BUILDING PERMIT ON HOLD UNTIL SUB-C HAS BEEN PROCESSED AND APPROVED'
+    },
+    {
+      id: 'bcpc', label: 'BCPC\nSUBMISSIONS', type: 'BCPC',
+      bars: [
+        { code:'BCPCSUB1', start:xm(2043), end:xm(2303), color:'#83A148', sub:'ROW HOME DESIGN', action:'RE-SUBMIT',
+          tip:'BCPC Sub 1 – Row Home Design re-submit.' },
+        { code:'BCPCSUB2', start:xm(3194), end:xm(3455), color:'#83A148', sub:'ROW HOME DESIGN', action:'RE-SUBMIT',
+          tip:'BCPC Sub 2 – Row Home Design re-submit.' },
+        { code:'BCPCSUB3', start:xm(4205), end:xm(4466), color:'#83A148', sub:'FINAL DESIGN',    action:'RE-SUBMIT',
+          tip:'BCPC Sub 3 – Final Design re-submit.' }
+      ],
+      approvals: [
+        { month:xm(3132), label:'APPROVAL', color:'#83A148', tip:'BCPC Approved' },
+        { month:xm(3424), label:'APPROVAL', color:'#83A148', tip:'BCPC Approved (Stage 2)' }
+      ]
+    },
+    {
+      id: 'subc', label: 'SUBST.\nCONFORMANCE', type: 'SUBC',
+      bars: [
+        { code:'SUBCCSUB1', start:xm(2045), end:xm(2303), color:'#4D62AD', sub:'ROW HOME DESIGN', action:'SUBMIT',
+          tip:'SUBC Sub 1 – Row Home Design submission.' },
+        { code:'SUBCCSUB2', start:xm(2907), end:xm(3164), color:'#4D62AD', sub:'ROW HOME DESIGN', action:'SUBMIT',
+          tip:'SUBC Sub 2 – Row Home Design.' },
+        { code:'SUBCCSUB3', start:xm(3488), end:xm(3744), color:'#4D62AD', sub:'FINAL DESIGN',    action:'SUBMIT',
+          tip:'SUBC Sub 3 – Final Design submission.' },
+        { code:'SUBCCSUB4', start:xm(3920), end:xm(4176), color:'#4D62AD', sub:'FINAL DESIGN',    action:'SUBMIT',
+          tip:'SUBC Sub 4 – Final Design submission.' },
+        { code:'SUBC\nAPPROVAL', start:xm(4179), end:xm(4395), color:'#B02E41', sub:'FINAL DESIGN', action:'', outlined:true,
+          tip:'Substantial Conformance Approved.' }
+      ]
+    },
+    {
+      id: 'grading', label: 'SITE\nGRADING', type: 'ON-SITE',
+      bars: [
+        { code:'ROUGH\nGRADING', start:xm(1656), end:xm(2234), color:'#E8D641', sub:'CDP DESIGN · ON-SITE BEGINS', action:'',
+          tip:'Rough Grading on-site begins. Environmental monitoring required.' },
+        { code:'PRECISE\nGRADING\n(RH)', start:xm(3167), end:xm(3743), color:'#E8D641', sub:'ROW HOME DESIGN · ON-SITE', action:'',
+          tip:'Precise Grading for Row Homes begins. Preparing for correct grading.' },
+        { code:'PRECISE\nGRADING\n(FD)', start:xm(4465), end:xm(5041), color:'#E8D641', sub:'FINAL DESIGN · ON-SITE', action:'',
+          tip:'Precise Grading for Final Design begins.' }
+      ]
+    },
+    {
+      id: 'construction', label: 'VERTICAL\nCONSTRUCTION', type: '',
+      bars: [
+        { code:'VERTICAL CON\nFIRST 5 ROW HOMES', start:xm(3455), end:xm(4317), color:'#471136', sub:'3 MONTHS', action:'',
+          tip:'Vertical construction begins for first 5 Row Homes. 3-month phase.' },
+        { code:'VERTICAL CON\nFINAL DESIGN', start:xm(4465), end:xm(5327), color:'#471136', sub:'15 MONTHS', action:'',
+          tip:'Vertical construction for Final Design. 15-month phase.' }
+      ]
+    }
+  ],
+  cdpRow: {
+    milestones: [
+      { month:xm(375),  code:'CDP EXT1',   label:'CDP\nEXT1\nCDP EXTENSION',   color:'#B02E41',
+        tip:'CDP Extension 1.' },
+      { month:xm(3250), code:'CDP EXT2',   label:'CDP\nEXT2\nCDP EXTENSION',   color:'#B02E41',
+        tip:'CDP Extension 2.' }
+    ]
+  },
+  notes: [
+    { month:xm(1450), row:'rgp',  text:'OMEGA PREPARING NEW GRADING DESIGN: FOR ROW HOMES' },
+    { month:xm(2607), row:'pgp',  text:'REVIEW OF DESIGN FOR FIRST 5 ROW HOME CHANGES' },
+    { month:xm(2550), row:'grading', text:'PREPARING FOR CORRECT GRADING' },
+    { month:xm(2694), row:'bp',   text:'BACK AND FORTH WITH THE CITY OF ENCINITAS,\nDETERMINING IF DESIGN CHANGES ARE ACCEPTABLE\nFOR BOTH ARCHITECTURE AND CIVIL DESIGN' },
+    { month:xm(1200), row:'bp',   text:'LINDSAY AND RORY DESIGN AND AGREEMENT\nOF THE FINAL PRODUCT' },
+    { month:xm(2714), row:'construction', text:'PRENTENDING WE ARE BUILDING THE RIGHT THING' }
+  ]
+},
+
+// ════════════════════════════════════════════
+// VERSION 3
+// ════════════════════════════════════════════
+v3: {
+  title: 'PROJECT SCHEDULE – V3',
+  banner: '<strong>V3 – BUILDING SHIFTS:</strong> Omega transition with engineering of final new design. Building footprint shifts significantly. New CPC (Coastal Plan Compliance) and GCC permit sequences added. Pad Certification required.',
+  phases: [
+    { month:xm(535),  label:'PHASE 1', note:'Initial CDP Design Phase' },
+    { month:xm(2278), label:'PHASE 2', note:'Final Design Transition' },
+    { month:xm(3150), label:'PHASE 3', note:'Construction Phase' }
+  ],
+  padCert: { month: xm(2137) },
+  rows: [
+    {
+      id: 'rgp', label: 'ROUGH\nGRADING\nPERMIT', type: 'RGP (REVISED)',
+      bars: [
+        { code:'RGPSUB1', start:xm(648),  end:xm(936),  color:'#BE1D2C', sub:'CDP DESIGN',     action:'SUBMIT',    review:{start:xm(843),end:xm(936)},
+          tip:'1st RGP submission. CDP Design phase. Color indicates revised permit sequence.' },
+        { code:'RGPSUB2', start:xm(1080), end:xm(1368), color:'#BE1D2C', sub:'BUILDING SHIFTS', action:'RE-SUBMIT', review:{start:xm(1275),end:xm(1368)},
+          tip:'2nd RGP submission. Building Shifts design phase.' },
+        { code:'RGP\nISSUANCE', start:xm(1368), end:xm(1728), color:'#D88738', sub:'ISSUANCE & BONDING · BUILDING SHIFTS', action:'',
+          tip:'RGP issued and bonding finalized. Building Shifts phase.' }
+      ]
+    },
+    {
+      id: 'pgp', label: 'PRECISE\nGRADING\nPERMIT', type: 'PGP',
+      bars: [
+        { code:'PGPSUB4', start:xm(936),  end:xm(1224), color:'#D88738', sub:'CDP DESIGN',  action:'SUBMIT',    review:{start:xm(1127),end:xm(1224)},
+          tip:'PGP Sub 4 – CDP Design submission (earlier than other versions).' },
+        { code:'PGPSUB5', start:xm(1512), end:xm(1800), color:'#D88738', sub:'CDP DESIGN',  action:'RE-SUBMIT', review:{start:xm(1711),end:xm(1800)},
+          tip:'PGP Sub 5 – CDP Design re-submit.' },
+        { code:'PGP\nISSUANCE', start:xm(1800), end:xm(2062), color:'#D8A439', sub:'ISSUANCE & BONDING · CDP DESIGN', action:'',
+          tip:'PGP issued. CDP Design phase.' }
+      ]
+    },
+    {
+      id: 'gcc', label: 'GCC\nGRADE CHANGE\nCOMPLIANCE', type: 'GCC',
+      bars: [
+        { code:'GCCSUB1', start:xm(2160), end:xm(2448), color:'#D88738', sub:'FINAL DESIGN', action:'RE-SUBMIT', review:{start:xm(2359),end:xm(2448)},
+          tip:'GCC Sub 1 – Grade Change Compliance, Final Design.' },
+        { code:'GCCSUB2', start:xm(2736), end:xm(3020), color:'#D88738', sub:'FINAL DESIGN', action:'RE-SUBMIT', review:{start:xm(2935),end:xm(3020)},
+          tip:'GCC Sub 2 – Grade Change Compliance, Final Design.' },
+        { code:'GCC\nAPPROVAL', start:xm(3031), end:xm(3210), color:'#B02E41', sub:'FINAL DESIGN', action:'', outlined:true,
+          tip:'GCC Approved.' }
+      ]
+    },
+    {
+      id: 'bp', label: 'BUILDING\nPERMIT', type: 'BP',
+      bars: [
+        { code:'BPSUB1', start:xm(431),  end:xm(792),  color:'#83A148', sub:'CDP DESIGN',  action:'SUBMIT',    review:{start:xm(652),end:xm(792)},
+          tip:'1st BP submission. CDP Design phase.' },
+        { code:'BPSUB2', start:xm(1080), end:xm(1440), color:'#83A148', sub:'CDP DESIGN',  action:'RE-SUBMIT', review:{start:xm(1256),end:xm(1440)},
+          tip:'2nd BP submission. CDP Design re-submit.' },
+        { code:'BPSUB3', start:xm(1584), end:xm(1944), color:'#83A148', sub:'CDP DESIGN',  action:'RE-SUBMIT', review:{start:xm(1761),end:xm(1944)},
+          tip:'3rd BP submission. CDP Design.' },
+        { code:'BPSUB3+', start:xm(1944), end:xm(2160), color:'#83A148', sub:'CDP DESIGN', action:'', tip:'BP review continues.' },
+        { code:'BP\nISSUANCE', start:xm(2167), end:xm(2516), color:'#83A148', sub:'CDP DESIGN · ISSUANCE', action:'', outlined:true,
+          tip:'BP Issuance – Building Permit formally issued.' }
+      ]
+    },
+    {
+      id: 'cpc', label: 'CPC\nCOASTAL PLAN\nCOMPLIANCE', type: 'CPC',
+      bars: [
+        { code:'CPCSUB1', start:xm(2188), end:xm(2520), color:'#008B53', sub:'ARCH REVISIONS · BUILDING PERMIT', action:'SUBMIT', review:{start:xm(2381),end:xm(2520)},
+          tip:'CPC Sub 1 – Coastal Plan Compliance, Arch Revisions.' },
+        { code:'CPCSUB2', start:xm(2664), end:xm(2948), color:'#008B53', sub:'ARCH REVISIONS · BUILDING PERMIT', action:'SUBMIT', review:{start:xm(2857),end:xm(2948)},
+          tip:'CPC Sub 2 – Coastal Plan Compliance, Arch Revisions.' },
+        { code:'CPC\nAPPROVAL', start:xm(2969), end:xm(3148), color:'#008B53', sub:'FINAL DESIGN', action:'', outlined:true,
+          tip:'CPC Approved.' }
+      ]
+    },
+    {
+      id: 'subc', label: 'SUBST.\nCONFORMANCE', type: 'SUBC',
+      bars: [
+        { code:'SUBCCSUB1', start:xm(2191), end:xm(2447), color:'#4D62AD', sub:'FINAL DESIGN', action:'SUBMIT',
+          tip:'SUBC Sub 1 – Final Design submission.' },
+        { code:'SUBCCSUB2', start:xm(2883), end:xm(3095), color:'#4D62AD', sub:'FINAL DESIGN', action:'SUBMIT',
+          tip:'SUBC Sub 2 – Final Design submission.' },
+        { code:'SUBC\nAPPROVAL', start:xm(3098), end:xm(3313), color:'#5137069'.replace('#5137069','#4E8B4A'), sub:'FINAL DESIGN', action:'', outlined:true,
+          tip:'Substantial Conformance Approved.' }
+      ]
+    },
+    {
+      id: 'grading', label: 'SITE\nGRADING', type: 'ON-SITE',
+      bars: [
+        { code:'ROUGH\nGRADING', start:xm(1656), end:xm(2232), color:'#E8D641', sub:'FINAL DESIGN · ON-SITE BEGINS', action:'',
+          tip:'Rough Grading on-site begins. Environmental monitoring required.', tribes:true },
+        { code:'PRECISE\nGRADING', start:xm(2088), end:xm(2664), color:'#E8D641', sub:'FINAL DESIGN · ON-SITE BEGINS', action:'',
+          tip:'Precise Grading on-site begins. Overlaps with Rough Grading.', tribes:true }
+      ]
+    },
+    {
+      id: 'construction', label: 'CONSTRUCTION', type: '',
+      bars: [
+        { code:'FOUNDATION', start:xm(2664), end:xm(3096), color:'#471136', sub:'', action:'',
+          tip:'Foundation work begins.' },
+        { code:'VERTICAL\nCONSTRUCTION', start:xm(3024), end:xm(4248), color:'#471136', sub:'18 MONTHS', action:'',
+          tip:'Vertical construction begins. Estimated 18 months to completion.' }
+      ]
+    }
+  ],
+  cdpRow: {
+    bars: [
+      { start:xm(936), end:xm(2768), color:'#E2E3E4', tip:'CDP Permit active period.' }
+    ],
+    milestones: [
+      { month:xm(375),  code:'CDP EXT1',   label:'CDP\nEXT1\nCDP EXTENSION',   color:'#B02E41',
+        tip:'CDP Extension 1.' },
+      { month:xm(996),  code:'CDP EXT1',   label:'CDP\nEXT1\nEXTENSION ISSUED', color:'#B02E41',
+        tip:'CDP Extension 1 issued.' },
+      { month:xm(2835), code:'CDP VESTED', label:'CDP\nPROJECT VESTED',         color:'#B02E41',
+        tip:'Project Vested – CDP rights established.' }
+    ]
+  },
+  notes: [
+    { month:xm(1657), row:'gcc',  text:'OMEGA TRANSITION WITH ENGINEERING\nOF FINAL NEW DESIGN' },
+    { month:xm(2700), row:'subc', text:'REVISIONS' },
+    { month:xm(2700), row:'gcc',  text:'REVISIONS' },
+    { month:xm(1460), row:'bp',   text:'REVISIONS' },
+    { month:xm(953),  row:'pgp',  text:'REVISIONS' },
+    { month:xm(2663), row:'subc', text:'BACK AND FORTH WITH THE CITY OF ENCINITAS,\nDETERMINING IF DESIGN CHANGES ARE ACCEPTABLE\nFOR BOTH ARCHITECTURE AND CIVIL DESIGN' },
+    { month:xm(1250), row:'subc', text:'LINDSAY AND RORY FINALIZE THE\nDESIGN AND AGREEMENT OF THE FINAL PRODUCT' }
+  ]
+},
+
+// ════════════════════════════════════════════
+// VERSION 4
+// ════════════════════════════════════════════
+v4: {
+  title: 'PROJECT SCHEDULE – V4',
+  banner: '<strong>V4 – FINAL DESIGN? (IS THIS POSSIBLE?):</strong> Accelerated schedule with earlier construction start. Building Shifts incorporated. Additional PGP Sub 6 added. Question mark on "Vertical Construction Final Design?" label suggests uncertainty about schedule viability.',
+  phases: [
+    { month:xm(535),  label:'PHASE 1', note:'Initial CDP Design Phase' },
+    { month:xm(2285), label:'PHASE 2', note:'Final Design Transition' },
+    { month:xm(3479), label:'PHASE 3', note:'Construction Phase' }
+  ],
+  padCert: { month: xm(2137) },
+  rows: [
+    {
+      id: 'rgp', label: 'ROUGH\nGRADING\nPERMIT', type: 'RGP (REVISED)',
+      bars: [
+        { code:'RGPSUB1', start:xm(648),  end:xm(936),  color:'#BE1D2C', sub:'CDP DESIGN',     action:'SUBMIT',    review:{start:xm(843),end:xm(936)},
+          tip:'1st RGP submission. CDP Design.' },
+        { code:'RGPSUB2', start:xm(1080), end:xm(1368), color:'#BE1D2C', sub:'BUILDING SHIFTS', action:'RE-SUBMIT', review:{start:xm(1275),end:xm(1368)},
+          tip:'2nd RGP submission. Building Shifts phase.' },
+        { code:'RGP\nISSUANCE', start:xm(1368), end:xm(1728), color:'#D88738', sub:'ISSUANCE & BONDING · BUILDING SHIFTS', action:'',
+          tip:'RGP issued and bonding finalized.' }
+      ]
+    },
+    {
+      id: 'pgp', label: 'PRECISE\nGRADING\nPERMIT', type: 'PGP',
+      bars: [
+        { code:'PGPSUB4', start:xm(936),  end:xm(1224), color:'#D88738', sub:'CDP DESIGN',  action:'SUBMIT', review:{start:xm(1127),end:xm(1224)},
+          tip:'PGP Sub 4 – CDP Design submission.' },
+        { code:'PGPSUB5', start:xm(2261), end:xm(2520), color:'#D88738', sub:'FINAL DESIGN', action:'RE-SUBMIT', review:{start:xm(2431),end:xm(2520)},
+          tip:'PGP Sub 5 – Final Design re-submit.' },
+        { code:'PGPSUB6', start:xm(2766), end:xm(3025), color:'#D88738', sub:'FINAL DESIGN', action:'RE-SUBMIT', review:{start:xm(2936),end:xm(3025)},
+          tip:'PGP Sub 6 – Added in V4. Final Design re-submit.' },
+        { code:'PGP\nISSUANCE', start:xm(3026), end:xm(3288), color:'#D8A439', sub:'ISSUANCE & BONDING · FINAL DESIGN', action:'',
+          tip:'PGP issued. Final Design.' }
+      ]
+    },
+    {
+      id: 'bp', label: 'BUILDING\nPERMIT', type: 'BP',
+      bars: [
+        { code:'BPSUB1', start:xm(431),  end:xm(864),  color:'#83A148', sub:'CDP DESIGN',  action:'SUBMIT',    review:{start:xm(652),end:xm(864)},
+          tip:'1st BP submission. CDP Design.' },
+        { code:'BPSUB2', start:xm(1152), end:xm(1512), color:'#83A148', sub:'CDP DESIGN',  action:'RE-SUBMIT', review:{start:xm(1328),end:xm(1512)},
+          tip:'2nd BP submission. CDP Design re-submit.' },
+        { code:'BPSUB3', start:xm(1656), end:xm(2016), color:'#83A148', sub:'CDP DESIGN',  action:'RE-SUBMIT', review:{start:xm(1833),end:xm(2016)},
+          tip:'3rd BP submission. CDP Design.' },
+        { code:'BPSUB3+', start:xm(2016), end:xm(2160), color:'#83A148', sub:'CDP DESIGN', action:'', tip:'BP review continues.' },
+        { code:'BP\nISSUANCE', start:xm(2167), end:xm(2516), color:'#83A148', sub:'CDP DESIGN · ISSUANCE', action:'', outlined:true,
+          tip:'BP formally issued. CDP Design.' }
+      ]
+    },
+    {
+      id: 'cpc', label: 'CPC\nCOASTAL PLAN\nCOMPLIANCE', type: 'CPC',
+      bars: [
+        { code:'CPCSUB1', start:xm(2232), end:xm(2593), color:'#008B53', sub:'ARCH REVISIONS · BUILDING PERMIT', action:'SUBMIT', review:{start:xm(2453),end:xm(2593)},
+          tip:'CPC Sub 1 – Coastal Plan Compliance, Arch Revisions.' },
+        { code:'CPCSUB2', start:xm(2880), end:xm(3241), color:'#008B53', sub:'ARCH REVISIONS · BUILDING PERMIT', action:'SUBMIT', review:{start:xm(3101),end:xm(3241)},
+          tip:'CPC Sub 2 – Coastal Plan Compliance, Arch Revisions.' },
+        { code:'CPC\nAPPROVAL', start:xm(3467), end:xm(3645), color:'#008B53', sub:'FINAL DESIGN', action:'', outlined:true,
+          tip:'CPC Approved.' }
+      ]
+    },
+    {
+      id: 'subc', label: 'SUBST.\nCONFORMANCE', type: 'SUBC',
+      bars: [
+        { code:'SUBCCSUB1', start:xm(2264), end:xm(2593), color:'#4D62AD', sub:'FINAL DESIGN', action:'SUBMIT',
+          tip:'SUBC Sub 1 – Final Design submission.' },
+        { code:'SUBCCSUB2', start:xm(3244), end:xm(3456), color:'#4D62AD', sub:'FINAL DESIGN', action:'SUBMIT',
+          tip:'SUBC Sub 2 – Final Design submission.' },
+        { code:'SUBC\nAPPROVAL', start:xm(3459), end:xm(3674), color:'#4E8B4A', sub:'FINAL DESIGN', action:'', outlined:true,
+          tip:'Substantial Conformance Approved.' }
+      ]
+    },
+    {
+      id: 'grading', label: 'SITE\nGRADING', type: 'ON-SITE',
+      bars: [
+        { code:'ROUGH\nGRADING', start:xm(1656), end:xm(2232), color:'#E8D641', sub:'CDP DESIGN · ON-SITE BEGINS', action:'',
+          tip:'Rough Grading on-site begins. Environmental monitoring required.', tribes:true },
+        { code:'PRECISE\nGRADING', start:xm(3312), end:xm(3888), color:'#E8D641', sub:'CDP DESIGN · ON-SITE BEGINS', action:'',
+          tip:'Precise Grading on-site begins. Tribes, Archaeological, Paleontological, Biological monitoring.', tribes:true }
+      ]
+    },
+    {
+      id: 'construction', label: 'CONSTRUCTION', type: '',
+      bars: [
+        { code:'FOUNDATION', start:xm(2017), end:xm(2450), color:'#471136', sub:'', action:'',
+          tip:'Foundation work begins.' },
+        { code:'VERTICAL\nCONSTRUCTION\nFINAL DESIGN?', start:xm(2451), end:xm(3675), color:'#471136', sub:'18 MONTHS', action:'',
+          tip:'Vertical construction for Final Design. "IS THIS POSSIBLE?" – Uncertainty about schedule viability.' }
+      ]
+    }
+  ],
+  cdpRow: {
+    bars: [
+      { start:xm(936), end:xm(2232), color:'#E2E3E4', tip:'CDP Permit active period.' }
+    ],
+    milestones: [
+      { month:xm(375),  code:'CDP EXT1',   label:'CDP\nEXT1\nCDP EXTENSION',    color:'#B02E41',
+        tip:'CDP Extension 1.' },
+      { month:xm(996),  code:'CDP EXT1',   label:'CDP\nEXT1\nEXTENSION ISSUED', color:'#B02E41',
+        tip:'CDP Extension 1 issued.' },
+      { month:xm(2289), code:'CDP VESTED', label:'CDP\nPROJECT VESTED',          color:'#B02E41',
+        tip:'Project Vested – CDP rights established.' }
+    ]
+  },
+  notes: [
+    { month:xm(1590), row:'gcc',  text:'OMEGA TRANSITION WITH ENGINEERING\nOF FINAL NEW DESIGN' },
+    { month:xm(2750), row:'pgp',  text:'REVISIONS' },
+    { month:xm(2820), row:'subc', text:'REVISIONS' },
+    { month:xm(1580), row:'bp',   text:'REVISIONS' },
+    { month:xm(2880), row:'subc', text:'BACK AND FORTH WITH THE CITY OF ENCINITAS,\nDETERMINING IF DESIGN CHANGES ARE ACCEPTABLE\nFOR BOTH ARCHITECTURE AND CIVIL DESIGN' },
+    { month:xm(1250), row:'subc', text:'LINDSAY AND RORY FINALIZE THE\nDESIGN AND AGREEMENT OF THE FINAL PRODUCT' },
+    { month:xm(2580), row:'construction', text:'IS THIS POSSIBLE?' }
+  ]
+}
+
+}; // end VERSIONS
+
+// ──────────────────────────────────────────────
+// RENDER
+// ──────────────────────────────────────────────
+function render() {
+  const data = VERSIONS[currentVersion];
+  document.getElementById('versionLabel').textContent = data.title;
+  document.getElementById('versionBanner').innerHTML = data.banner;
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', ['v1','v2','v3','v4'][i] === currentVersion);
+  });
+
+  const wrap = document.getElementById('timelineWrap');
+  wrap.innerHTML = '';
+
+  // ── Labels column ──────────────────────────
+  const labelsCol = document.createElement('div');
+  labelsCol.className = 'row-labels';
+
+  const hdrCell = document.createElement('div');
+  hdrCell.className = 'label-hdr';
+  hdrCell.textContent = 'ACTIVITY';
+  labelsCol.appendChild(hdrCell);
+
+  // Row labels
+  const rowDefs = data.rows;
+  rowDefs.forEach(row => {
+    const el = document.createElement('div');
+    el.className = 'row-label';
+    el.innerHTML = row.label.replace(/\n/g,'<br>') +
+      (row.type ? `<span class="row-type">${row.type}</span>` : '');
+    labelsCol.appendChild(el);
+  });
+
+  // CDP row label
+  const cdpLbl = document.createElement('div');
+  cdpLbl.className = 'row-label';
+  cdpLbl.innerHTML = 'CDP<br>MILESTONES<span class="row-type">COASTAL DEV. PERMIT</span>';
+  labelsCol.appendChild(cdpLbl);
+
+  wrap.appendChild(labelsCol);
+
+  // ── Chart area ─────────────────────────────
+  const chartArea = document.createElement('div');
+  chartArea.className = 'chart-area';
+  const monthPx = parseInt(getComputedStyle(document.documentElement)
+    .getPropertyValue('--month-w')) * zoomLevel;
+  chartArea.style.minWidth = (TOTAL * monthPx) + 'px';
+
+  // Month header
+  const hdr = document.createElement('div');
+  hdr.className = 'month-header';
+  MONTHS.forEach((m, i) => {
+    const cell = document.createElement('div');
+    cell.className = 'month-col-hdr';
+    cell.style.width = monthPx + 'px';
+    if (i === 8) cell.classList.add('year-break'); // Jan 2027
+    if (Math.floor(TODAY_MONTH) === i) cell.classList.add('current-month-hdr');
+    cell.innerHTML = `<span class="month-abbr">${m.abbr}</span><span class="month-year">${m.year}</span>
+      <div class="month-week-markers">${'<div class="week-dot"></div>'.repeat(4)}</div>`;
+    hdr.appendChild(cell);
+  });
+  chartArea.appendChild(hdr);
+
+  // Today line overlay (spans all gantt rows)
+  const todayWrap = document.createElement('div');
+  todayWrap.style.cssText = 'position:relative;';
+
+  // Gantt rows
+  rowDefs.forEach(row => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'gantt-row';
+    rowEl.style.minWidth = (TOTAL * monthPx) + 'px';
+
+    // Month cell backgrounds
+    const cells = document.createElement('div');
+    cells.className = 'month-cells';
+    MONTHS.forEach((m, i) => {
+      const c = document.createElement('div');
+      c.className = 'month-cell' + (i===8?' year-break':'') + (i%2===1?' alt':'');
+      c.style.width = monthPx + 'px';
+      cells.appendChild(c);
+    });
+    rowEl.appendChild(cells);
+
+    // Phase markers (only in first row)
+    if (row === rowDefs[0] && data.phases) {
+      data.phases.forEach(ph => {
+        const pm = document.createElement('div');
+        pm.className = 'phase-marker';
+        pm.style.left = pct(ph.month);
+        const lbl = document.createElement('div');
+        lbl.className = 'phase-label';
+        lbl.textContent = ph.label;
+        lbl.title = ph.note;
+        pm.appendChild(lbl);
+        rowEl.appendChild(pm);
+      });
+    }
+
+    // Bars
+    const container = document.createElement('div');
+    container.className = 'bar-container';
+    container.style.cssText = 'position:absolute;top:0;left:0;right:0;bottom:0;';
+
+    (row.bars || []).forEach(bar => {
+      const barEl = document.createElement('div');
+      barEl.className = 'bar' + (bar.outlined ? ' outlined milestone-bar' : '');
+      barEl.style.left   = pct(bar.start);
+      barEl.style.width  = pctW(bar.start, bar.end);
+      barEl.style.background = bar.color;
+      if (bar.outlined) {
+        barEl.style.borderColor = bar.color;
+        barEl.style.color = bar.color;
+      } else {
+        barEl.style.color = isLight(bar.color) ? '#1a1a2e' : '#fff';
+      }
+
+      const barW = (bar.end - bar.start) / TOTAL * monthPx * TOTAL;
+      const wide = barW > 80;
+
+      barEl.innerHTML = `
+        <div class="bar-code" style="font-size:${wide?'11px':'9px'}">${bar.code.replace(/\n/g,'<br>')}</div>
+        ${bar.sub && wide ? `<div class="bar-sub">${bar.sub}</div>` : ''}
+        ${bar.action && wide ? `<div class="bar-action">${bar.action}</div>` : ''}
+      `;
+
+      barEl.addEventListener('mouseenter', e => showTip(e, bar));
+      barEl.addEventListener('mousemove',  e => moveTip(e));
+      barEl.addEventListener('mouseleave', hideTip);
+      container.appendChild(barEl);
+
+      // Review period stripe
+      if (bar.review) {
+        const rv = document.createElement('div');
+        rv.className = 'bar-review';
+        rv.style.left  = pct(bar.review.start);
+        rv.style.width = pctW(bar.review.start, bar.review.end);
+        container.appendChild(rv);
+      }
+
+      // Tribes label
+      if (bar.tribes) {
+        const tl = document.createElement('div');
+        tl.className = 'tribes-label';
+        tl.style.left  = pct(bar.end);
+        tl.style.top   = 'calc(var(--bar-pad) + 4px)';
+        tl.style.position = 'absolute';
+        tl.innerHTML = 'TRIBES<br>ARCHEO<br>PALEO<br>BIO';
+        container.appendChild(tl);
+      }
+    });
+
+    // Approval tags (between-row markers)
+    (row.approvals || []).forEach(app => {
+      const tag = document.createElement('div');
+      tag.className = 'approval-tag';
+      tag.style.color = app.color;
+      tag.style.borderColor = app.color;
+      tag.style.left = pct(app.month);
+      tag.style.top  = '4px';
+      tag.style.height = 'calc(100% - 8px)';
+      tag.textContent = 'APPROVAL';
+      tag.title = app.tip;
+      container.appendChild(tag);
+    });
+
+    rowEl.appendChild(container);
+
+    // Row note
+    if (row.note) {
+      const n = document.createElement('div');
+      n.className = 'callout' + (showNotes ? '' : ' hidden');
+      n.style.cssText = `top:2px;right:4px;color:#B02E41;font-size:9px;background:rgba(13,17,23,0.9);
+        border:1px solid rgba(176,46,65,0.4);border-radius:3px;padding:3px 6px;`;
+      n.textContent = row.note;
+      rowEl.appendChild(n);
+    }
+
+    todayWrap.appendChild(rowEl);
+  });
+
+  // CDP row
+  const cdpRow = document.createElement('div');
+  cdpRow.className = 'cdp-row';
+  cdpRow.style.minWidth = (TOTAL * monthPx) + 'px';
+
+  // CDP month cells
+  const cdpCells = document.createElement('div');
+  cdpCells.className = 'month-cells';
+  MONTHS.forEach((m, i) => {
+    const c = document.createElement('div');
+    c.className = 'month-cell' + (i===8?' year-break':'') + (i%2===1?' alt':'');
+    c.style.width = monthPx + 'px';
+    cdpCells.appendChild(c);
+  });
+  cdpRow.appendChild(cdpCells);
+
+  // CDP bar (gray range)
+  if (data.cdpRow && data.cdpRow.bars) {
+    data.cdpRow.bars.forEach(b => {
+      const barEl = document.createElement('div');
+      barEl.className = 'cdp-bar';
+      barEl.style.left   = pct(b.start);
+      barEl.style.width  = pctW(b.start, b.end);
+      barEl.style.top    = '20px';
+      barEl.style.height = '50px';
+      barEl.title = b.tip;
+      cdpRow.appendChild(barEl);
+    });
+  }
+
+  // CDP milestones
+  if (data.cdpRow && data.cdpRow.milestones) {
+    data.cdpRow.milestones.forEach(ms => {
+      const el = document.createElement('div');
+      el.className = 'cdp-milestone';
+      el.style.left  = pct(ms.month);
+      el.style.bottom = '0';
+      el.style.top    = '0';
+      el.style.position = 'absolute';
+      el.style.color  = ms.color;
+      el.innerHTML = `
+        <div class="cdp-flag" style="margin-top:8px">${ms.label.replace(/\n/g,'<br>')}</div>
+        <div class="cdp-pole" style="flex:1"></div>
+      `;
+      el.style.display = 'flex';
+      el.style.flexDirection = 'column';
+      el.style.alignItems = 'center';
+      el.style.transform = 'translateX(-50%)';
+      el.style.zIndex = '5';
+      el.title = ms.tip;
+      cdpRow.appendChild(el);
+    });
+  }
+
+  todayWrap.appendChild(cdpRow);
+
+  // Today line
+  const todayLine = document.createElement('div');
+  todayLine.className = 'today-line';
+  todayLine.style.left = pct(TODAY_MONTH);
+  todayWrap.appendChild(todayLine);
+
+  // Pad Cert marker
+  if (data.padCert) {
+    // Show in first grading/construction row
+    const allRows = todayWrap.querySelectorAll('.gantt-row');
+    allRows.forEach((rowEl, idx) => {
+      if (rowDefs[idx] && (rowDefs[idx].id === 'grading' || rowDefs[idx].id === 'construction')) {
+        const pc = document.createElement('div');
+        pc.className = 'pad-cert';
+        pc.style.cssText = `position:absolute;top:0;height:100%;left:${pct(data.padCert.month)};z-index:9;`;
+        pc.innerHTML = `<div class="pad-cert-inner"><div class="pad-cert-label">PAD CERT</div></div>`;
+        rowEl.style.position = 'relative';
+        rowEl.appendChild(pc);
+      }
+    });
+  }
+
+  // Notes/annotations
+  if (showNotes && data.notes) {
+    data.notes.forEach(note => {
+      const rowIdx = rowDefs.findIndex(r => r.id === note.row);
+      if (rowIdx < 0) return;
+      const allRows = todayWrap.querySelectorAll('.gantt-row');
+      const targetRow = allRows[rowIdx];
+      if (!targetRow) return;
+      const ann = document.createElement('div');
+      ann.className = 'callout';
+      ann.style.cssText = `position:absolute;top:2px;left:${pct(note.month)};
+        color:${note.row === 'construction' ? '#fff' : '#B02E41'};
+        font-size:9px;background:rgba(13,17,23,0.9);
+        border:1px solid rgba(176,46,65,0.4);border-radius:3px;padding:4px 7px;z-index:20;`;
+      ann.textContent = note.text;
+      targetRow.style.position = 'relative';
+      targetRow.appendChild(ann);
+    });
+  }
+
+  chartArea.appendChild(todayWrap);
+  wrap.appendChild(chartArea);
+
+  // Apply zoom to month width
+  document.documentElement.style.setProperty('--month-w', monthPx + 'px');
+}
+
+// ──────────────────────────────────────────────
+// TOOLTIP
+// ──────────────────────────────────────────────
+const tipEl = document.getElementById('tooltip');
+function showTip(e, bar) {
+  tipEl.innerHTML = `
+    <div class="tip-title">${bar.code.replace(/\n/g,' ')}</div>
+    <div class="tip-row"><span class="tip-key">Design Phase</span><span class="tip-val">${bar.sub || '–'}</span></div>
+    ${bar.action ? `<div class="tip-row"><span class="tip-key">Action</span><span class="tip-val">${bar.action}</span></div>` : ''}
+    <div class="tip-row"><span class="tip-key">Timeline</span><span class="tip-val">${monthName(bar.start)} → ${monthName(bar.end)}</span></div>
+    <div class="tip-row"><span class="tip-key">Duration</span><span class="tip-val">${((bar.end - bar.start)).toFixed(1)} months</span></div>
+    ${bar.tip ? `<div style="margin-top:6px;font-size:10px;color:var(--text2);line-height:1.4">${bar.tip}</div>` : ''}
+  `;
+  tipEl.classList.add('visible');
+  moveTip(e);
+}
+function moveTip(e) {
+  const x = e.clientX + 12, y = e.clientY + 12;
+  const r = tipEl.getBoundingClientRect();
+  tipEl.style.left = Math.min(x, window.innerWidth  - r.width  - 8) + 'px';
+  tipEl.style.top  = Math.min(y, window.innerHeight - r.height - 8) + 'px';
+}
+function hideTip()  { tipEl.classList.remove('visible'); }
+
+function monthName(m) {
+  const i = Math.floor(m);
+  if (i < 0 || i >= MONTHS.length) return '–';
+  const frac = m - i;
+  const week = frac < 0.25 ? 'early' : frac < 0.5 ? 'mid' : frac < 0.75 ? 'late' : 'end of';
+  return `${week} ${MONTHS[i].abbr} ${MONTHS[i].year}`;
+}
+
+// ──────────────────────────────────────────────
+// CONTROLS
+// ──────────────────────────────────────────────
+function setVersion(v) { currentVersion = v; render(); }
+function zoomIn()    { zoomLevel = Math.min(zoomLevel * 1.3, 4.0); render(); }
+function zoomOut()   { zoomLevel = Math.max(zoomLevel / 1.3, 0.4); render(); }
+function zoomReset() { zoomLevel = 1.0; render(); }
+function toggleNotes() {
+  showNotes = !showNotes;
+  document.getElementById('notesBtn').classList.toggle('active', showNotes);
+  document.getElementById('notesBtn').textContent = showNotes ? 'HIDE NOTES' : 'SHOW NOTES';
+  render();
+}
+
+function isLight(hex) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return (0.299*r + 0.587*g + 0.114*b) > 160;
+}
+
+// ──────────────────────────────────────────────
+// INIT
+// ──────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
